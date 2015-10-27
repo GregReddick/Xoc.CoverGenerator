@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Xoc.CoverGenerator.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="FileName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">c:\temp\cover.pdf</Value>
-    </Setting>
     <Setting Name="IsbnFileName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">barcode_978-0-692-53174-7_52000_{0}dpi.png</Value>
     </Setting>
@@ -18,7 +15,7 @@
       <Value Profile="(Default)">0.125</Value>
     </Setting>
     <Setting Name="Dpi" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">1200</Value>
     </Setting>
     <Setting Name="SafeBorder" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">0.125</Value>
@@ -56,17 +53,11 @@
     <Setting Name="Subtitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Best practices for writing C# code</Value>
     </Setting>
-    <Setting Name="FrontBlockHeight" Type="System.Single" Scope="Application">
-      <Value Profile="(Default)">1.65</Value>
-    </Setting>
-    <Setting Name="FrontBlockLocation" Type="System.Single" Scope="Application">
-      <Value Profile="(Default)">2</Value>
-    </Setting>
     <Setting Name="Draft" Type="System.String" Scope="Application">
       <Value Profile="(Default)">DRAFT</Value>
     </Setting>
     <Setting Name="Blurb" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">The Reddick C# Style Guide is a set of best practices for writing C# code. It shows recommended programming style, practices, and methods for each aspect of a C# program. It covers file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices, programming principles, programming rules of thumb, and architectural best practices. Following these guidelines improves the readability of their source code and makes software maintenance easier.</Value>
+      <Value Profile="(Default)">The Reddick C# Style Guide is a set of best practices for writing C# code. It shows recommended programming style, practices, and methods for each aspect of a C# program. It covers file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices, programming principles, programming rules of thumb, and architectural best practices. Following these guidelines improves the readability of the source code and makes software maintenance easier.</Value>
     </Setting>
   </Settings>
 </SettingsFile>

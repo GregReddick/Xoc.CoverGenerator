@@ -57,7 +57,7 @@ namespace Xoc.Penrose
 			}
 
 			RectangleF shadow = layoutRectangle;
-			int offset = Settings.Default.Dpi / 100;
+			int offset = font.SizeInPoints <= 14 ? Settings.Default.Dpi / 300 : Settings.Default.Dpi / 100;
 			shadow.Offset(offset, offset);
 			graphics.DrawString(
 				s,

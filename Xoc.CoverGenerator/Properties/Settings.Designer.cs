@@ -25,15 +25,6 @@ namespace Xoc.CoverGenerator.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\temp\\cover.pdf")]
-        public string FileName {
-            get {
-                return ((string)(this["FileName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("barcode_978-0-692-53174-7_52000_{0}dpi.png")]
         public string IsbnFileName {
             get {
@@ -70,7 +61,7 @@ namespace Xoc.CoverGenerator.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1200")]
         public int Dpi {
             get {
                 return ((int)(this["Dpi"]));
@@ -187,24 +178,6 @@ namespace Xoc.CoverGenerator.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.65")]
-        public float FrontBlockHeight {
-            get {
-                return ((float)(this["FrontBlockHeight"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public float FrontBlockLocation {
-            get {
-                return ((float)(this["FrontBlockLocation"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("DRAFT")]
         public string Draft {
             get {
@@ -214,7 +187,7 @@ namespace Xoc.CoverGenerator.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"The Reddick C# Style Guide is a set of best practices for writing C# code. It shows recommended programming style, practices, and methods for each aspect of a C# program. It covers file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices, programming principles, programming rules of thumb, and architectural best practices. Following these guidelines improves the readability of their source code and makes software maintenance easier.")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"The Reddick C# Style Guide is a set of best practices for writing C# code. It shows recommended programming style, practices, and methods for each aspect of a C# program. It covers file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices, programming principles, programming rules of thumb, and architectural best practices. Following these guidelines improves the readability of the source code and makes software maintenance easier.")]
         public string Blurb {
             get {
                 return ((string)(this["Blurb"]));

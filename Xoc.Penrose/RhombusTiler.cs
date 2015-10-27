@@ -70,9 +70,12 @@ namespace Xoc.Penrose
 			bitmap.SetResolution(dpi, dpi);
 			using (Graphics graphics = Graphics.FromImage(bitmap))
 			{
-				foreach (Triangle triangle in this.Triangles)
+				using (Pen pen = new Pen(Brushes.Black, dpi / 150))
 				{
-					triangle.DrawTriangle(graphics, size, 10000 * (dpi / 300));
+					foreach (Triangle triangle in this.Triangles)
+					{
+						triangle.DrawTriangle(graphics, size, 10000 * (dpi / 300), pen);
+					}
 				}
 
 				Rectangle rect = new Rectangle(0, 0, size.Width, size.Height);

@@ -143,7 +143,11 @@ namespace Xoc.CoverGenerator
 				isbnBlockSize.Height * dpi);
 
 			// Rectangle for the blurb on the back
-			RectangleF rectBlurb = new RectangleF(rectSafeBack.X, rectSafeBack.Y, rectSafeBack.Width, rectSafeBack.Height / 3);
+			RectangleF rectBlurb = new RectangleF(
+				rectSafeBack.X + (.125f * dpi),
+				rectSafeBack.Y + (.125f * dpi),
+				rectSafeBack.Width - (.5f * dpi),
+				1.6f * dpi);
 
 			try
 			{
@@ -297,11 +301,12 @@ namespace Xoc.CoverGenerator
 			Console.WriteLine(AssemblyInfo.Attribute<AssemblyTitleAttribute>()?.Title);
 			Console.WriteLine(AssemblyInfo.Attribute<AssemblyCopyrightAttribute>()?.Copyright);
 
+			string fileName = Path.Combine(Path.GetTempPath(), "cover.pdf");
+
 			int dpi = Settings.Default.Dpi;
 			SizeF bookTrim = Settings.Default.BookTrim;
 			float bleedSize = Settings.Default.BleedSize;
 			int bookPageCount = Settings.Default.BookPageCount;
-			string fileName = Settings.Default.FileName;
 			string title = Settings.Default.Title;
 			string author = Settings.Default.Author;
 			string subtitle = Settings.Default.Subtitle;

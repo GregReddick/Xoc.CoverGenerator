@@ -20,9 +20,6 @@ namespace Xoc.Penrose
 		/// <summary>The thin rhombus brush.</summary>
 		private static readonly Brush BrushThinRhombus = new SolidBrush(Color.FromArgb(0xb3, 0x1c, 0x1f));
 
-		/// <summary>The pen black.</summary>
-		private static readonly Pen PenBlack = new Pen(Color.Black, 2);
-
 		/// <summary>The Golden ratio.</summary>
 		private static readonly float Phi = (float)((1 + Math.Sqrt(5)) / 2);
 
@@ -111,29 +108,26 @@ namespace Xoc.Penrose
 		}
 
 		/// <summary>Draw the triangle.</summary>
-		/// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
 		/// <param name="graphics">The graphics object to draw on.</param>
 		/// <param name="bitmapSize">Size of the bitmap.</param>
 		/// <param name="scaleImage">The scale of the image.</param>
-		internal void DrawTriangle(Graphics graphics, Size bitmapSize, float scaleImage)
+		/// <param name="pen">The pen.</param>
+		internal void DrawTriangle(Graphics graphics, Size bitmapSize, float scaleImage, Pen pen)
 		{
 			Contract.Requires<ArgumentNullException>(graphics != null);
 
 			this.scale = scaleImage;
 			this.offset = new PointF(bitmapSize.Width / 2, bitmapSize.Height / 2);
 
-			Pen pen;
 			Brush brush;
 
 			switch (this.RhombusType)
 			{
 				default:
 				case RhombusType.Fat:
-					pen = Triangle.PenBlack;
 					brush = Triangle.BrushFatRhombus;
 					break;
 				case RhombusType.Thin:
-					pen = Triangle.PenBlack;
 					brush = Triangle.BrushThinRhombus;
 					break;
 			}
