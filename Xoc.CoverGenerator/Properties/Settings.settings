@@ -2,62 +2,138 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Xoc.CoverGenerator.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="IsbnFileName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">barcode_978-0-692-53174-7_52000_{0}dpi.png</Value>
-    </Setting>
-    <Setting Name="LogoFileName" Type="System.String" Scope="Application">
+    <Setting Name="FileNameLogo" Type="System.String" Scope="Application">
       <Value Profile="(Default)">xoc software color {0}dpi.png</Value>
     </Setting>
     <Setting Name="BookPageCount" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">240</Value>
+      <Value Profile="(Default)">258</Value>
     </Setting>
-    <Setting Name="BleedSize" Type="System.Single" Scope="Application">
+    <Setting Name="MarginBleedInches" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">0.125</Value>
     </Setting>
-    <Setting Name="Dpi" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">1200</Value>
+    <Setting Name="CreateSpaceDpi" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">300</Value>
     </Setting>
-    <Setting Name="SafeBorder" Type="System.Single" Scope="Application">
+    <Setting Name="MarginSafeInches" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">0.125</Value>
     </Setting>
-    <Setting Name="SafeSpineBorder" Type="System.Single" Scope="Application">
+    <Setting Name="MarginSafeSpineInches" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">0.125</Value>
     </Setting>
-    <Setting Name="IsbnBlockSize" Type="System.Drawing.SizeF" Scope="Application">
+    <Setting Name="SizeIsbnBlockInches" Type="System.Drawing.SizeF" Scope="Application">
       <Value Profile="(Default)">2, 1.2</Value>
     </Setting>
-    <Setting Name="BookTrim" Type="System.Drawing.SizeF" Scope="Application">
+    <Setting Name="SizeBookTrimInches" Type="System.Drawing.SizeF" Scope="Application">
       <Value Profile="(Default)">6, 9</Value>
     </Setting>
-    <Setting Name="Title" Type="System.String" Scope="Application">
+    <Setting Name="BookTitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">The Reddick C# Style Guide</Value>
     </Setting>
-    <Setting Name="Author" Type="System.String" Scope="Application">
+    <Setting Name="BookAuthor" Type="System.String" Scope="Application">
       <Value Profile="(Default)">GREG REDDICK</Value>
     </Setting>
     <Setting Name="PageType" Type="Xoc.CoverGenerator.PageType" Scope="Application">
       <Value Profile="(Default)">White</Value>
     </Setting>
-    <Setting Name="PageThicknessWhite" Type="System.Single" Scope="Application">
+    <Setting Name="PageThicknessWhiteInches" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">0.002252</Value>
     </Setting>
-    <Setting Name="PageThicknessCream" Type="System.Single" Scope="Application">
+    <Setting Name="PageThicknessCreamInches" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">0.0025</Value>
     </Setting>
-    <Setting Name="PageThicknessColor" Type="System.Single" Scope="Application">
+    <Setting Name="PageThicknessColorInches" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">0.002347</Value>
     </Setting>
-    <Setting Name="Directory" Type="System.String" Scope="Application">
+    <Setting Name="DirectoryImages" Type="System.String" Scope="Application">
       <Value Profile="(Default)">..\..\..\Images</Value>
     </Setting>
-    <Setting Name="Subtitle" Type="System.String" Scope="Application">
+    <Setting Name="BookSubtitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Best practices for writing C# code</Value>
     </Setting>
-    <Setting Name="Draft" Type="System.String" Scope="Application">
+    <Setting Name="BookDraftText" Type="System.String" Scope="Application">
       <Value Profile="(Default)">DRAFT</Value>
     </Setting>
-    <Setting Name="Blurb" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">The Reddick C# Style Guide is a set of best practices for writing C# code. It shows recommended programming style, practices, and methods for each aspect of a C# program. It covers file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices, programming principles, programming rules of thumb, and architectural best practices. Following these guidelines improves the readability of the source code and makes software maintenance easier.</Value>
+    <Setting Name="BookBlurb" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">So you've learned how to write C# code that compiles, but how do you make your code great? This is the definitive reference on how to write elegant C# code. This book covers:
+
+   ▪ Formatting, documenting, and organizing code
+   ▪ Naming elements
+   ▪ Using code patterns
+   ▪ Architecting projects
+   ▪ Implementing security
+   ▪ Handling warnings
+   ... and many other best practices
+
+This book contrains hundreds of rules and examples showing how to write good quality C# code. Using these recommendations will make your code more correct, robust, extensible, reusable, efficient, and maintainable.
+
+"This little red book gives you everything you need to know about the best way to style C# code."
+   — Chris Pirih, the developer of Microsoft Ski Free</Value>
+    </Setting>
+    <Setting Name="MarginTextInches" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">0.25</Value>
+    </Setting>
+    <Setting Name="ShowTrim" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowSafe" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowDraft" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FontTitleSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">28</Value>
+    </Setting>
+    <Setting Name="FontSubtitleSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">18</Value>
+    </Setting>
+    <Setting Name="FontAuthorSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">22</Value>
+    </Setting>
+    <Setting Name="FontTitleSpineSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">18</Value>
+    </Setting>
+    <Setting Name="FontAuthorSpineSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="FontBlurbSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="FontDraftSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">48</Value>
+    </Setting>
+    <Setting Name="FontTypeface" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Cambria</Value>
+    </Setting>
+    <Setting Name="SpacingTitleInches" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">2.125</Value>
+    </Setting>
+    <Setting Name="SpacingAuthorInches" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="SpacingSubtitleInches" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="SpacingDraftInches" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">1.75</Value>
+    </Setting>
+    <Setting Name="PenroseIterations" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">13</Value>
+    </Setting>
+    <Setting Name="FileNameIsbn" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">barcode_978-0-692-53174-7_52000_{0}dpi.png</Value>
+    </Setting>
+    <Setting Name="ShowIsbn" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="KindleDpi" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="KindleAspectRatio" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">1.6</Value>
+    </Setting>
+    <Setting Name="KindleHeight" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">2500</Value>
     </Setting>
   </Settings>
 </SettingsFile>

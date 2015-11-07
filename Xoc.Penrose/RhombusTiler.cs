@@ -13,6 +13,7 @@ namespace Xoc.Penrose
 	using System.Diagnostics.Contracts;
 	using System.Drawing;
 	using System.Drawing.Drawing2D;
+	using System.Drawing.Imaging;
 
 	/// <summary>A rhombus tiler.</summary>
 	public class RhombusTiler
@@ -66,15 +67,18 @@ namespace Xoc.Penrose
 		public Bitmap GetBitmap(Size size, int dpi)
 		{
 			Contract.Ensures(Contract.Result<Bitmap>() != null);
-			Bitmap bitmap = new Bitmap(size.Width, size.Height);
+			Contract.Ensures((Contract.Result<Bitmap>().PixelFormat & PixelFormat.Indexed) == 0);
+
+			Bitmap bitmap = new Bitmap(size.Width, size.Height, PixelFormat.Format32bppRgb);
 			bitmap.SetResolution(dpi, dpi);
+			Contract.Assume((bitmap.PixelFormat & PixelFormat.Indexed) == 0);
 			using (Graphics graphics = Graphics.FromImage(bitmap))
 			{
-				using (Pen pen = new Pen(Brushes.Black, dpi / 150))
+				using (Pen pen = new Pen(Brushes.Black, (float)Math.Ceiling(dpi / 150d)))
 				{
 					foreach (Triangle triangle in this.Triangles)
 					{
-						triangle.DrawTriangle(graphics, size, 10000 * (dpi / 300), pen);
+						triangle.DrawTriangle(graphics, size, 10000f * (float)Math.Ceiling(dpi / 300d), pen);
 					}
 				}
 
@@ -88,6 +92,7 @@ namespace Xoc.Penrose
 				graphics.FillRectangle(linearGradientBrush, rect);
 			}
 
+			Contract.Assume((bitmap.PixelFormat & PixelFormat.Indexed) == 0);
 			return bitmap;
 		}
 

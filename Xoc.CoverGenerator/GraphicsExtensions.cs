@@ -25,6 +25,7 @@ namespace Xoc.Penrose
 		internal static void DrawStringEmbossed(this Graphics graphics, string s, Font font, Brush brush, PointF point, SizeF size)
 		{
 			Contract.Requires<ArgumentNullException>(graphics != null);
+			Contract.Requires<ArgumentNullException>(font != null);
 
 			graphics.DrawStringEmbossed(
 				s,
@@ -50,6 +51,7 @@ namespace Xoc.Penrose
 			StringFormat format)
 		{
 			Contract.Requires<ArgumentNullException>(graphics != null);
+			Contract.Requires<ArgumentNullException>(font != null);
 
 			using (Brush brushSmear = new SolidBrush(Color.FromArgb(96, Color.DarkRed)))
 			{
@@ -57,7 +59,7 @@ namespace Xoc.Penrose
 			}
 
 			RectangleF shadow = layoutRectangle;
-			int offset = font.SizeInPoints <= 14 ? Settings.Default.Dpi / 300 : Settings.Default.Dpi / 100;
+			int offset = font.SizeInPoints <= 14 ? Settings.Default.CreateSpaceDpi / 300 : Settings.Default.CreateSpaceDpi / 100;
 			shadow.Offset(offset, offset);
 			graphics.DrawString(
 				s,

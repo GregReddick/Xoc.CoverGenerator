@@ -25,25 +25,16 @@ namespace Xoc.CoverGenerator.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("barcode_978-0-692-53174-7_52000_{0}dpi.png")]
-        public string IsbnFileName {
-            get {
-                return ((string)(this["IsbnFileName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("xoc software color {0}dpi.png")]
-        public string LogoFileName {
+        public string FileNameLogo {
             get {
-                return ((string)(this["LogoFileName"]));
+                return ((string)(this["FileNameLogo"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("240")]
+        [global::System.Configuration.DefaultSettingValueAttribute("258")]
         public int BookPageCount {
             get {
                 return ((int)(this["BookPageCount"]));
@@ -53,72 +44,72 @@ namespace Xoc.CoverGenerator.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.125")]
-        public float BleedSize {
+        public float MarginBleedInches {
             get {
-                return ((float)(this["BleedSize"]));
+                return ((float)(this["MarginBleedInches"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1200")]
-        public int Dpi {
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public int CreateSpaceDpi {
             get {
-                return ((int)(this["Dpi"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.125")]
-        public float SafeBorder {
-            get {
-                return ((float)(this["SafeBorder"]));
+                return ((int)(this["CreateSpaceDpi"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.125")]
-        public float SafeSpineBorder {
+        public float MarginSafeInches {
             get {
-                return ((float)(this["SafeSpineBorder"]));
+                return ((float)(this["MarginSafeInches"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.125")]
+        public float MarginSafeSpineInches {
+            get {
+                return ((float)(this["MarginSafeSpineInches"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2, 1.2")]
-        public global::System.Drawing.SizeF IsbnBlockSize {
+        public global::System.Drawing.SizeF SizeIsbnBlockInches {
             get {
-                return ((global::System.Drawing.SizeF)(this["IsbnBlockSize"]));
+                return ((global::System.Drawing.SizeF)(this["SizeIsbnBlockInches"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("6, 9")]
-        public global::System.Drawing.SizeF BookTrim {
+        public global::System.Drawing.SizeF SizeBookTrimInches {
             get {
-                return ((global::System.Drawing.SizeF)(this["BookTrim"]));
+                return ((global::System.Drawing.SizeF)(this["SizeBookTrimInches"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("The Reddick C# Style Guide")]
-        public string Title {
+        public string BookTitle {
             get {
-                return ((string)(this["Title"]));
+                return ((string)(this["BookTitle"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("GREG REDDICK")]
-        public string Author {
+        public string BookAuthor {
             get {
-                return ((string)(this["Author"]));
+                return ((string)(this["BookAuthor"]));
             }
         }
         
@@ -134,63 +125,274 @@ namespace Xoc.CoverGenerator.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.002252")]
-        public float PageThicknessWhite {
+        public float PageThicknessWhiteInches {
             get {
-                return ((float)(this["PageThicknessWhite"]));
+                return ((float)(this["PageThicknessWhiteInches"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.0025")]
-        public float PageThicknessCream {
+        public float PageThicknessCreamInches {
             get {
-                return ((float)(this["PageThicknessCream"]));
+                return ((float)(this["PageThicknessCreamInches"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.002347")]
-        public float PageThicknessColor {
+        public float PageThicknessColorInches {
             get {
-                return ((float)(this["PageThicknessColor"]));
+                return ((float)(this["PageThicknessColorInches"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Images")]
-        public string Directory {
+        public string DirectoryImages {
             get {
-                return ((string)(this["Directory"]));
+                return ((string)(this["DirectoryImages"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Best practices for writing C# code")]
-        public string Subtitle {
+        public string BookSubtitle {
             get {
-                return ((string)(this["Subtitle"]));
+                return ((string)(this["BookSubtitle"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("DRAFT")]
-        public string Draft {
+        public string BookDraftText {
             get {
-                return ((string)(this["Draft"]));
+                return ((string)(this["BookDraftText"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"The Reddick C# Style Guide is a set of best practices for writing C# code. It shows recommended programming style, practices, and methods for each aspect of a C# program. It covers file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices, programming principles, programming rules of thumb, and architectural best practices. Following these guidelines improves the readability of the source code and makes software maintenance easier.")]
-        public string Blurb {
+        [global::System.Configuration.DefaultSettingValueAttribute(@"So you've learned how to write C# code that compiles, but how do you make your code great? This is the definitive reference on how to write elegant C# code. This book covers:
+
+   ▪ Formatting, documenting, and organizing code
+   ▪ Naming elements
+   ▪ Using code patterns
+   ▪ Architecting projects
+   ▪ Implementing security
+   ▪ Handling warnings
+   ... and many other best practices
+
+This book contrains hundreds of rules and examples showing how to write good quality C# code. Using these recommendations will make your code more correct, robust, extensible, reusable, efficient, and maintainable.
+
+""This little red book gives you everything you need to know about the best way to style C# code.""
+   — Chris Pirih, the developer of Microsoft Ski Free")]
+        public string BookBlurb {
             get {
-                return ((string)(this["Blurb"]));
+                return ((string)(this["BookBlurb"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        public float MarginTextInches {
+            get {
+                return ((float)(this["MarginTextInches"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowTrim {
+            get {
+                return ((bool)(this["ShowTrim"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowSafe {
+            get {
+                return ((bool)(this["ShowSafe"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowDraft {
+            get {
+                return ((bool)(this["ShowDraft"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
+        public float FontTitleSize {
+            get {
+                return ((float)(this["FontTitleSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("18")]
+        public float FontSubtitleSize {
+            get {
+                return ((float)(this["FontSubtitleSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("22")]
+        public float FontAuthorSize {
+            get {
+                return ((float)(this["FontAuthorSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("18")]
+        public float FontTitleSpineSize {
+            get {
+                return ((float)(this["FontTitleSpineSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        public float FontAuthorSpineSize {
+            get {
+                return ((float)(this["FontAuthorSpineSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        public float FontBlurbSize {
+            get {
+                return ((float)(this["FontBlurbSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("48")]
+        public float FontDraftSize {
+            get {
+                return ((float)(this["FontDraftSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Cambria")]
+        public string FontTypeface {
+            get {
+                return ((string)(this["FontTypeface"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.125")]
+        public float SpacingTitleInches {
+            get {
+                return ((float)(this["SpacingTitleInches"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public float SpacingAuthorInches {
+            get {
+                return ((float)(this["SpacingAuthorInches"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float SpacingSubtitleInches {
+            get {
+                return ((float)(this["SpacingSubtitleInches"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.75")]
+        public float SpacingDraftInches {
+            get {
+                return ((float)(this["SpacingDraftInches"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("13")]
+        public int PenroseIterations {
+            get {
+                return ((int)(this["PenroseIterations"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("barcode_978-0-692-53174-7_52000_{0}dpi.png")]
+        public string FileNameIsbn {
+            get {
+                return ((string)(this["FileNameIsbn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowIsbn {
+            get {
+                return ((bool)(this["ShowIsbn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public int KindleDpi {
+            get {
+                return ((int)(this["KindleDpi"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.6")]
+        public float KindleAspectRatio {
+            get {
+                return ((float)(this["KindleAspectRatio"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2500")]
+        public int KindleHeight {
+            get {
+                return ((int)(this["KindleHeight"]));
             }
         }
     }

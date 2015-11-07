@@ -4,12 +4,6 @@
 // </copyright>
 // <summary>Implements the program class</summary>
 //------------------------------------------------------------------------------------------------------------------------------------------
-
-// Uncomment these to draw the trim, safe lines, and/or draft on the cover
-////#define DRAWTRIM
-////#define DRAWSAFE
-#define DRAFT
-
 namespace Xoc.CoverGenerator
 {
 	using System;
@@ -25,12 +19,16 @@ namespace Xoc.CoverGenerator
 	using Penrose;
 	using Properties;
 
-	/// <summary>A program.</summary>
+	/// <summary>
+	/// The program to draw the book cover to a PDF. A general rule on variable names throughout this class: If a measurement
+	/// ends in the suffix "Inches", then the measurement is in inches, otherwise it is in pixels, calibrated for the dpi of
+	/// the final image. The dpi (dots per inch) can be 300, 600, 1200, or 2400.
+	/// </summary>
 	internal static class Program
 	{
 		/// <summary>Gets the page thickness.</summary>
 		/// <value>The page thickness in fractions of an inch.</value>
-		private static float PageThickness
+		private static float PageThicknessInches
 		{
 			get
 			{
@@ -41,13 +39,13 @@ namespace Xoc.CoverGenerator
 				{
 					default:
 					case PageType.White:
-						result = Settings.Default.PageThicknessWhite;
+						result = Settings.Default.PageThicknessWhiteInches;
 						break;
 					case PageType.Cream:
-						result = Settings.Default.PageThicknessCream;
+						result = Settings.Default.PageThicknessCreamInches;
 						break;
 					case PageType.Color:
-						result = Settings.Default.PageThicknessColor;
+						result = Settings.Default.PageThicknessColorInches;
 						break;
 				}
 
@@ -55,193 +53,151 @@ namespace Xoc.CoverGenerator
 			}
 		}
 
-		/// <summary>
-		/// Adds text and images to the background image.
-		/// </summary>
-		/// <param name="graphics">The graphics.</param>
-		/// <param name="size">The size.</param>
+		/// <summary>Adds a back cover text.</summary>
+		/// <param name="graphics">The graphics object to draw to.</param>
 		/// <param name="dpi">The DPI of the cover.</param>
-		/// <param name="bookTrim">The book trim.</param>
-		/// <param name="bleedSize">Size of the bleed.</param>
-		/// <param name="bookPageCount">Number of book pages.</param>
-		/// <param name="title">The title.</param>
-		/// <param name="author">The author.</param>
-		/// <param name="subtitle">The subtitle.</param>
-		private static void AddTextAndImages(
+		/// <param name="rectSafe">The rectangle safe.</param>
+		private static void AddBackCoverText(
 			Graphics graphics,
-			Size size,
 			int dpi,
-			SizeF bookTrim,
-			float bleedSize,
-			int bookPageCount,
-			string title,
-			string author,
-			string subtitle)
+			RectangleF rectSafe)
 		{
-			Contract.Requires<ArgumentNullException>(graphics != null);
-
-			Font fontTitle = null;
-			Font fontAuthor = null;
-			Font fontSubtitle = null;
-			Font fontTitleSpine = null;
-			Font fontAuthorSpine = null;
 			Font fontBlurb = null;
-			Font fontDraft = null;
-
-			float safeBorder = Settings.Default.SafeBorder;
-			float safeSpineBorder = Settings.Default.SafeSpineBorder;
-			SizeF isbnBlockSize = Settings.Default.IsbnBlockSize;
-			string directory = Settings.Default.Directory;
-			string isbnFileName = Settings.Default.IsbnFileName;
-			string logoFileName = Settings.Default.LogoFileName;
-			string draft = Settings.Default.Draft;
-			string blurb = Settings.Default.Blurb;
-			Contract.Assume(directory != null);
-			Contract.Assume(isbnFileName != null);
-			Contract.Assume(logoFileName != null);
-
-			// Trim Rectangle
-			RectangleF rectTrim = new RectangleF(
-				bleedSize * dpi,
-				bleedSize * dpi,
-				size.Width - (bleedSize * 2 * dpi),
-				size.Height - (bleedSize * 2 * dpi));
-
-			// Spine Rectangle
-			RectangleF rectSpine = new RectangleF(
-				rectTrim.X + (bookTrim.Width * dpi),
-				0,
-				Program.PageThickness * bookPageCount * dpi,
-				size.Height);
-
-			// Safe area of cover back rectangle
-			RectangleF rectSafeBack = new RectangleF(
-				rectTrim.X + (safeBorder * dpi),
-				rectTrim.Y + (safeBorder * dpi),
-				(bookTrim.Width - (safeBorder * 2)) * dpi,
-				(bookTrim.Height - (safeBorder * 2)) * dpi);
-
-			// Safe area of cover spine rectangle
-			RectangleF rectSafeSpine = new RectangleF(
-				rectSpine.X + (safeSpineBorder * dpi),
-				rectTrim.X + (safeSpineBorder * dpi),
-				rectSpine.Width - (safeSpineBorder * 2 * dpi),
-				rectTrim.Height - (safeSpineBorder * 2 * dpi));
-
-			// Safe area of cover front rectangle
-			RectangleF rectSafeFront = new RectangleF(
-				rectSpine.Right + (safeBorder * dpi),
-				rectTrim.Y + (safeBorder * dpi),
-				(bookTrim.Width - (safeBorder * 2)) * dpi,
-				(bookTrim.Height - (safeBorder * 2)) * dpi);
-
-			// Rectangle for the ISBN on cover back
-			RectangleF rectIsbn = new RectangleF(
-				rectSafeBack.Right - (isbnBlockSize.Width * dpi),
-				rectSafeBack.Bottom - (isbnBlockSize.Height * dpi),
-				isbnBlockSize.Width * dpi,
-				isbnBlockSize.Height * dpi);
-
-			// Rectangle for the blurb on the back
-			RectangleF rectBlurb = new RectangleF(
-				rectSafeBack.X + (.125f * dpi),
-				rectSafeBack.Y + (.125f * dpi),
-				rectSafeBack.Width - (.5f * dpi),
-				1.6f * dpi);
 
 			try
 			{
-				fontTitle = new Font("Cambria", 28, FontStyle.Bold);
-				fontAuthor = new Font("Cambria", 22);
-				fontSubtitle = new Font("Cambria", 18, FontStyle.Italic);
-				fontTitleSpine = new Font("Cambria", 18);
-				fontAuthorSpine = new Font("Cambria", 12);
-				fontBlurb = new Font("Cambria", 12);
-				fontDraft = new Font("Cambria", 48);
+				string bookBlurb = Settings.Default.BookBlurb;
+				string directoryImages = Settings.Default.DirectoryImages;
+				string fileNameIsbn = Settings.Default.FileNameIsbn;
+				string fileNameLogo = Settings.Default.FileNameLogo;
+				float fontBlurbSize = Settings.Default.FontBlurbSize;
+				SizeF sizeIsbnBlockInches = Settings.Default.SizeIsbnBlockInches;
+				float marginText = Settings.Default.MarginTextInches * dpi;
+				string fontTypeface = Settings.Default.FontTypeface;
+
+				Contract.Assume(directoryImages != null);
+				Contract.Assume(fileNameIsbn != null);
+				Contract.Assume(fileNameLogo != null);
+
+				SizeF sizeIsbnBlock = new SizeF(sizeIsbnBlockInches.Width * dpi, sizeIsbnBlockInches.Height * dpi);
+
+				// Rectangle for the ISBN on cover back
+				RectangleF rectIsbn = new RectangleF(
+					rectSafe.Right - marginText - sizeIsbnBlock.Width,
+					rectSafe.Bottom - marginText - sizeIsbnBlock.Height,
+					sizeIsbnBlock.Width,
+					sizeIsbnBlock.Height);
+
+				// Location for the blurb on the back
+				PointF pointBlurb = new PointF(rectSafe.X + marginText, rectSafe.Y + marginText);
+
+				fontBlurb = new Font(fontTypeface, fontBlurbSize);
 
 				// Calculate where text should appear
-				SizeF sizeTextTitle = graphics.MeasureString(title, fontTitle);
-				SizeF sizeTextTitleSpine = graphics.MeasureString(title, fontTitleSpine);
-				SizeF sizeTextAuthor = graphics.MeasureString(author, fontAuthor);
-				SizeF sizeTextAuthorSpine = graphics.MeasureString(author, fontAuthorSpine);
-				SizeF sizeTextSubtitle = graphics.MeasureString(subtitle, fontSubtitle);
-				SizeF sizeTextDraft = graphics.MeasureString(draft, fontDraft);
-				PointF pointTextTitle = new PointF(
-					rectSafeFront.X + ((rectSafeFront.Width - sizeTextTitle.Width) / 2),
-					rectTrim.Top + (2 * dpi));
-				PointF pointTextAuthor = new PointF(
-					rectSafeFront.X + ((rectSafeFront.Width - sizeTextAuthor.Width) / 2),
-					pointTextTitle.Y + (.85F * dpi));
-				PointF pointTextSubtitle = new PointF(
-					rectSafeFront.X + ((rectSafeFront.Width - sizeTextSubtitle.Width) / 2),
-					pointTextAuthor.Y + (1.25F * dpi));
-				PointF pointTextDraft = new PointF(
-					rectSafeFront.X + ((rectSafeFront.Width - sizeTextDraft.Width) / 2),
-					pointTextSubtitle.Y + (1.75F * dpi));
+				SizeF sizeTextBlurb = graphics.MeasureString(
+					bookBlurb,
+					fontBlurb,
+					(int)Math.Ceiling(rectSafe.Width - (2 * marginText)));
 
-#if DRAWTRIM
-				// Draw the trim rectangles
-				using (Pen penGreen = new Pen(Color.Green, 2))
-				{
-					graphics.DrawRectangle(penGreen, rectTrim.X, rectTrim.Y, rectTrim.Width, rectTrim.Height);
-					graphics.DrawRectangle(penGreen, rectSpine.X, rectSpine.Y, rectSpine.Width, rectSpine.Height);
-				}
-#endif
+				graphics.DrawStringEmbossed(bookBlurb, fontBlurb, Brushes.White, pointBlurb, sizeTextBlurb);
 
-#if DRAWSAFE
-				// Draw the safe area rectangles
-				using (Pen penBlue = new Pen(Color.Blue, 2))
+				// Get logo graphic and draw it on the back
+				string logoFileNameFull = string.Format(CultureInfo.InvariantCulture, fileNameLogo, dpi);
+				Contract.Assume(logoFileNameFull != null);
+				string logoPathName = Path.Combine(directoryImages, logoFileNameFull);
+				if (File.Exists(logoPathName))
 				{
-					graphics.DrawRectangle(penBlue, rectSafeBack.X, rectSafeBack.Y, rectSafeBack.Width, rectSafeBack.Height);
-					graphics.DrawRectangle(penBlue, rectSafeSpine.X, rectSafeSpine.Y, rectSafeSpine.Width, rectSafeSpine.Height);
-					graphics.DrawRectangle(penBlue, rectSafeFront.X, rectSafeFront.Y, rectSafeFront.Width, rectSafeFront.Height);
+					using (Bitmap bitmapLogo = new Bitmap(logoPathName))
+					{
+						graphics.DrawImage(bitmapLogo, rectSafe.X + marginText, rectSafe.Bottom - marginText - bitmapLogo.Height);
+					}
 				}
-#endif
 
 				// Fill ISBN area on the cover with white
 				graphics.FillRectangle(Brushes.White, rectIsbn);
 
+				if (Settings.Default.ShowIsbn)
+				{
+					// Get the isbn graphic and draw it on the back
+					string isbnFileNameFull = string.Format(CultureInfo.InvariantCulture, fileNameIsbn, dpi);
+					Contract.Assume(isbnFileNameFull != null);
+					string isbnPathName = Path.Combine(directoryImages, isbnFileNameFull);
+					if (File.Exists(isbnPathName))
+					{
+						using (Bitmap bitmapIsbn = new Bitmap(isbnPathName))
+						{
+							graphics.DrawImage(bitmapIsbn, rectIsbn.Left, rectIsbn.Top, rectIsbn.Width, rectIsbn.Height);
+						}
+					}
+				}
+			}
+			finally
+			{
+				fontBlurb?.Dispose();
+			}
+		}
+
+		/// <summary>Adds a front cover text.</summary>
+		/// <param name="graphics">The graphics object to draw to.</param>
+		/// <param name="dpi">The DPI of the cover.</param>
+		/// <param name="rectSafe">The rectangle safe.</param>
+		private static void AddFrontCoverText(
+			Graphics graphics,
+			int dpi,
+			RectangleF rectSafe)
+		{
+			Font fontTitle = null;
+			Font fontAuthor = null;
+			Font fontSubtitle = null;
+			Font fontDraft = null;
+
+			try
+			{
+				string bookTitle = Settings.Default.BookTitle;
+				string bookAuthor = Settings.Default.BookAuthor;
+				string bookSubtitle = Settings.Default.BookSubtitle;
+				string bookDraftText = Settings.Default.BookDraftText;
+				float fontAuthorSize = Settings.Default.FontAuthorSize;
+				float fontDraftSize = Settings.Default.FontDraftSize;
+				float fontSubtitleSize = Settings.Default.FontSubtitleSize;
+				float fontTitleSize = Settings.Default.FontTitleSize;
+				string fontTypeface = Settings.Default.FontTypeface;
+				float spacingTitle = Settings.Default.SpacingTitleInches * dpi;
+				float spacingAuthor = Settings.Default.SpacingAuthorInches * dpi;
+				float spacingSubtitle = Settings.Default.SpacingSubtitleInches * dpi;
+				float spacingDraft = Settings.Default.SpacingDraftInches * dpi;
+
+				fontAuthor = new Font(fontTypeface, fontAuthorSize);
+				fontDraft = new Font(fontTypeface, fontDraftSize);
+				fontSubtitle = new Font(fontTypeface, fontSubtitleSize, FontStyle.Italic);
+				fontTitle = new Font(fontTypeface, fontTitleSize, FontStyle.Bold);
+
+				SizeF sizeTextAuthor = graphics.MeasureString(bookAuthor, fontAuthor);
+				SizeF sizeTextDraft = graphics.MeasureString(bookDraftText, fontDraft);
+				SizeF sizeTextSubtitle = graphics.MeasureString(bookSubtitle, fontSubtitle);
+				SizeF sizeTextTitle = graphics.MeasureString(bookTitle, fontTitle);
+
+				PointF pointTextTitle = new PointF(
+					rectSafe.X + ((rectSafe.Width - sizeTextTitle.Width) / 2),
+					rectSafe.Top + spacingTitle);
+				PointF pointTextAuthor = new PointF(
+					rectSafe.X + ((rectSafe.Width - sizeTextAuthor.Width) / 2),
+					pointTextTitle.Y + spacingAuthor);
+				PointF pointTextSubtitle = new PointF(
+					rectSafe.X + ((rectSafe.Width - sizeTextSubtitle.Width) / 2),
+					pointTextAuthor.Y + spacingSubtitle);
+				PointF pointTextDraft = new PointF(
+					rectSafe.X + ((rectSafe.Width - sizeTextDraft.Width) / 2),
+					pointTextSubtitle.Y + spacingDraft);
+
 				// Draw the text on the Front Cover
-				graphics.DrawStringEmbossed(title, fontTitle, Brushes.White, pointTextTitle, sizeTextTitle);
-				graphics.DrawStringEmbossed(author, fontAuthor, Brushes.White, pointTextAuthor, sizeTextAuthor);
-				graphics.DrawStringEmbossed(subtitle, fontSubtitle, Brushes.White, pointTextSubtitle, sizeTextSubtitle);
-#if DRAFT
-				graphics.DrawStringEmbossed(draft, fontDraft, Brushes.Black, pointTextDraft, sizeTextDraft);
-#endif
-
-				// Draw the text on the spine
-				using (StringFormat stringFormat = new StringFormat(StringFormatFlags.DirectionVertical))
+				graphics.DrawStringEmbossed(bookTitle, fontTitle, Brushes.White, pointTextTitle, sizeTextTitle);
+				graphics.DrawStringEmbossed(bookAuthor, fontAuthor, Brushes.White, pointTextAuthor, sizeTextAuthor);
+				graphics.DrawStringEmbossed(bookSubtitle, fontSubtitle, Brushes.White, pointTextSubtitle, sizeTextSubtitle);
+				if (Settings.Default.ShowDraft)
 				{
-					RectangleF rectTitleSpine = new RectangleF(
-						rectSafeSpine.X + ((rectSafeSpine.Width - sizeTextTitleSpine.Height) / 2),
-						rectSafeSpine.Y + (safeSpineBorder * dpi),
-						sizeTextTitleSpine.Height,
-						sizeTextTitleSpine.Width);
-					graphics.DrawStringEmbossed(title, fontTitleSpine, Brushes.White, rectTitleSpine, stringFormat);
-					RectangleF rectAuthorSpine = new RectangleF(
-						rectSafeSpine.X + ((rectSafeSpine.Width - sizeTextAuthorSpine.Height) / 2),
-						rectSafeSpine.Bottom - (safeSpineBorder * dpi) - sizeTextAuthorSpine.Width,
-						sizeTextAuthorSpine.Height,
-						sizeTextAuthorSpine.Width);
-					graphics.DrawStringEmbossed(author, fontAuthorSpine, Brushes.White, rectAuthorSpine, stringFormat);
-				}
-
-				graphics.DrawStringEmbossed(blurb, fontBlurb, Brushes.White, rectBlurb.Location, rectBlurb.Size);
-
-				// Get the isbn graphic and draw it on the back
-				string isbnFileNameFull = string.Format(CultureInfo.InvariantCulture, isbnFileName, dpi);
-				string isbnPathName = Path.Combine(directory, isbnFileNameFull);
-				using (Bitmap bitmapIsbn = new Bitmap(isbnPathName))
-				{
-					graphics.DrawImage(bitmapIsbn, rectIsbn.Left, rectIsbn.Top, rectIsbn.Width, rectIsbn.Height);
-				}
-
-				// Get logo graphic and draw it on the back
-				string logoFileNameFull = string.Format(CultureInfo.InvariantCulture, logoFileName, dpi);
-				string logoPathName = Path.Combine(directory, logoFileNameFull);
-				using (Bitmap bitmapLogo = new Bitmap(logoPathName))
-				{
-					graphics.DrawImage(bitmapLogo, rectSafeBack.X, rectSafeBack.Bottom - bitmapLogo.Height);
+					// Puts the draft text on the front cover
+					graphics.DrawStringEmbossed(bookDraftText, fontDraft, Brushes.Black, pointTextDraft, sizeTextDraft);
 				}
 			}
 			finally
@@ -249,32 +205,157 @@ namespace Xoc.CoverGenerator
 				fontTitle?.Dispose();
 				fontAuthor?.Dispose();
 				fontSubtitle?.Dispose();
-				fontTitleSpine?.Dispose();
-				fontAuthorSpine?.Dispose();
-				fontBlurb?.Dispose();
 				fontDraft?.Dispose();
 			}
 		}
 
-		/// <summary>Creates a PDF.</summary>
+		/// <summary>Adds a spine text.</summary>
+		/// <param name="graphics">The graphics object to draw to.</param>
+		/// <param name="dpi">The DPI of the cover.</param>
+		/// <param name="rectSafe">The rectangle safe.</param>
+		private static void AddSpineText(
+			Graphics graphics,
+			int dpi,
+			RectangleF rectSafe)
+		{
+			Font fontTitleSpine = null;
+			Font fontAuthorSpine = null;
+
+			try
+			{
+				string bookTitle = Settings.Default.BookTitle;
+				string bookAuthor = Settings.Default.BookAuthor;
+				float fontTitleSpineSize = Settings.Default.FontTitleSpineSize;
+				float fontAuthorSpineSize = Settings.Default.FontAuthorSpineSize;
+				float marginText = Settings.Default.MarginTextInches * dpi;
+				string fontTypeface = Settings.Default.FontTypeface;
+
+				fontTitleSpine = new Font(fontTypeface, fontTitleSpineSize);
+				fontAuthorSpine = new Font(fontTypeface, fontAuthorSpineSize);
+
+				SizeF sizeTextTitleSpine = graphics.MeasureString(bookTitle, fontTitleSpine);
+				SizeF sizeTextAuthorSpine = graphics.MeasureString(bookAuthor, fontAuthorSpine);
+
+				using (StringFormat stringFormat = new StringFormat(StringFormatFlags.DirectionVertical))
+				{
+					RectangleF rectTitleSpine = new RectangleF(
+						rectSafe.X + ((rectSafe.Width - sizeTextTitleSpine.Height) / 2),
+						rectSafe.Y + marginText,
+						sizeTextTitleSpine.Height,
+						sizeTextTitleSpine.Width);
+					graphics.DrawStringEmbossed(bookTitle, fontTitleSpine, Brushes.White, rectTitleSpine, stringFormat);
+					RectangleF rectAuthorSpine = new RectangleF(
+						rectSafe.X + ((rectSafe.Width - sizeTextAuthorSpine.Height) / 2),
+						rectSafe.Bottom - marginText - sizeTextAuthorSpine.Width,
+						sizeTextAuthorSpine.Height,
+						sizeTextAuthorSpine.Width);
+
+					// Draw the text on the spine
+					graphics.DrawStringEmbossed(bookAuthor, fontAuthorSpine, Brushes.White, rectAuthorSpine, stringFormat);
+				}
+			}
+			finally
+			{
+				fontTitleSpine?.Dispose();
+				fontAuthorSpine?.Dispose();
+			}
+		}
+
+		/// <summary>Adds text and images to the background image.</summary>
+		/// <param name="graphics">The graphics object to draw to.</param>
+		/// <param name="sizeCover">The cover size.</param>
+		/// <param name="dpi">The DPI of the cover.</param>
+		/// <param name="sizeBookTrim">The book trim.</param>
+		/// <param name="spineThickness">The spine thickness DPI.</param>
+		/// <param name="sizeBleed">Size of the bleed.</param>
+		private static void AddTextAndImages(
+			Graphics graphics,
+			Size sizeCover,
+			int dpi,
+			SizeF sizeBookTrim,
+			float spineThickness,
+			float sizeBleed)
+		{
+			Contract.Requires<ArgumentNullException>(graphics != null);
+
+			float marginSafe = Settings.Default.MarginSafeInches * dpi;
+			float marginSafeSpine = Settings.Default.MarginSafeSpineInches * dpi;
+
+			// Trim Rectangle
+			RectangleF rectTrim = new RectangleF(
+				sizeBleed,
+				sizeBleed,
+				sizeCover.Width - (sizeBleed * 2),
+				sizeCover.Height - (sizeBleed * 2));
+
+			// Spine Rectangle
+			RectangleF rectSpine = new RectangleF(rectTrim.X + sizeBookTrim.Width, 0, spineThickness, sizeCover.Height);
+
+			// Safe area of cover back rectangle
+			RectangleF rectSafeBack = new RectangleF(
+				rectTrim.X + marginSafe,
+				rectTrim.Y + marginSafe,
+				sizeBookTrim.Width - (marginSafe * 2),
+				sizeBookTrim.Height - (marginSafe * 2));
+
+			// Safe area of cover spine rectangle
+			RectangleF rectSafeSpine = new RectangleF(
+				rectSpine.X + marginSafeSpine,
+				rectTrim.X + marginSafeSpine,
+				rectSpine.Width - (marginSafeSpine * 2),
+				rectTrim.Height - (marginSafeSpine * 2));
+
+			// Safe area of cover front rectangle
+			RectangleF rectSafeFront = new RectangleF(
+				rectSpine.Right + marginSafe,
+				rectTrim.Y + marginSafe,
+				sizeBookTrim.Width - (marginSafe * 2),
+				sizeBookTrim.Height - (marginSafe * 2));
+
+			if (Settings.Default.ShowTrim)
+			{
+				// Draw the trim rectangles
+				using (Pen penGreen = new Pen(Color.Green, dpi / 150))
+				{
+					graphics.DrawRectangle(penGreen, rectTrim.X, rectTrim.Y, rectTrim.Width, rectTrim.Height);
+					graphics.DrawRectangle(penGreen, rectSpine.X, rectSpine.Y, rectSpine.Width, rectSpine.Height);
+				}
+			}
+
+			if (Settings.Default.ShowSafe)
+			{
+				// Draw the safe area rectangles
+				using (Pen penBlue = new Pen(Color.Blue, dpi / 150))
+				{
+					graphics.DrawRectangle(penBlue, rectSafeBack.X, rectSafeBack.Y, rectSafeBack.Width, rectSafeBack.Height);
+					graphics.DrawRectangle(penBlue, rectSafeSpine.X, rectSafeSpine.Y, rectSafeSpine.Width, rectSafeSpine.Height);
+					graphics.DrawRectangle(penBlue, rectSafeFront.X, rectSafeFront.Y, rectSafeFront.Width, rectSafeFront.Height);
+				}
+			}
+
+			AddFrontCoverText(graphics, dpi, rectSafeFront);
+			AddSpineText(graphics, dpi, rectSafeSpine);
+			AddBackCoverText(graphics, dpi, rectSafeBack);
+		}
+
+		/// <summary>Creates a PDF of the cover from the bitmap using PDFSharp.</summary>
 		/// <param name="image">The image.</param>
-		/// <param name="fileName">Filename of the file.</param>
-		/// <param name="title">The title.</param>
-		/// <param name="author">The author.</param>
-		/// <param name="subtitle">The subtitle.</param>
-		private static void CreatePdf(Image image, string fileName, string title, string author, string subtitle)
+		private static void CreateSpacePdf(Image image)
 		{
 			Contract.Requires<ArgumentNullException>(image != null);
 
 			using (PdfDocument pdfDocument = new PdfDocument())
 			{
 				Contract.Assume(pdfDocument.Info != null);
-				pdfDocument.Info.Title = title;
-				pdfDocument.Info.Author = author;
+				string bookTitle = Settings.Default.BookTitle;
+				string bookAuthor = Settings.Default.BookAuthor;
+				string bookSubtitle = Settings.Default.BookSubtitle;
+				pdfDocument.Info.Title = bookTitle;
+				pdfDocument.Info.Author = bookAuthor;
 				pdfDocument.Info.CreationDate = DateTime.Now;
 				pdfDocument.Info.ModificationDate = DateTime.Now;
 				pdfDocument.Info.Creator = "Xoc Cover Generator";
-				pdfDocument.Info.Subject = subtitle;
+				pdfDocument.Info.Subject = bookSubtitle;
 
 				// Create an empty page
 				PdfPage pdfPage = pdfDocument.AddPage();
@@ -290,46 +371,98 @@ namespace Xoc.CoverGenerator
 				xgraphics.DrawImage(ximage, 0, 0);
 
 				// Save the document...
+				string fileName = Path.Combine(Path.GetTempPath(), "cover.pdf");
 				pdfDocument.Save(fileName);
+
+				// View the pdf
+				Process.Start(fileName);
 			}
+		}
+
+		/// <summary>Creates kindle TIF.</summary>
+		/// <param name="bitmap">The bitmap.</param>
+		private static void KindleTif(Bitmap bitmap)
+		{
+			string fileNameKindle = Path.Combine(Path.GetTempPath(), "coverKindle.tif");
+
+			bitmap.Save(fileNameKindle);
+
+			// View the tif
+			Process.Start(fileNameKindle);
 		}
 
 		/// <summary>Main entry-point for this application.</summary>
 		private static void Main()
 		{
-			Console.OutputEncoding = Encoding.UTF8;
-			Console.WriteLine(AssemblyInfo.Attribute<AssemblyTitleAttribute>()?.Title);
-			Console.WriteLine(AssemblyInfo.Attribute<AssemblyCopyrightAttribute>()?.Copyright);
-
-			string fileName = Path.Combine(Path.GetTempPath(), "cover.pdf");
-
-			int dpi = Settings.Default.Dpi;
-			SizeF bookTrim = Settings.Default.BookTrim;
-			float bleedSize = Settings.Default.BleedSize;
-			int bookPageCount = Settings.Default.BookPageCount;
-			string title = Settings.Default.Title;
-			string author = Settings.Default.Author;
-			string subtitle = Settings.Default.Subtitle;
-
-			RhombusTiler rhomTiler = new RhombusTiler(13);
-			Size size = new Size(
-				(int)(((bookTrim.Width * 2) + (Program.PageThickness * bookPageCount) + (bleedSize * 2)) * dpi),
-				(int)((bookTrim.Height + (bleedSize * 2)) * dpi));
-
-			// Get the background image
-			using (Bitmap bitmap = rhomTiler.GetBitmap(size, dpi))
+			try
 			{
-				using (Graphics graphics = Graphics.FromImage(bitmap))
+				Console.OutputEncoding = Encoding.UTF8;
+				Console.WriteLine(AssemblyInfo.Attribute<AssemblyTitleAttribute>()?.Title);
+				Console.WriteLine(AssemblyInfo.Attribute<AssemblyCopyrightAttribute>()?.Copyright);
+
+				int dpi = Settings.Default.CreateSpaceDpi;
+				SizeF sizeBookTrimInches = Settings.Default.SizeBookTrimInches;
+				float marginBleed = Settings.Default.MarginBleedInches * dpi;
+				int penroseIterations = Settings.Default.PenroseIterations;
+				SizeF sizeBookTrim = new SizeF(sizeBookTrimInches.Width * dpi, sizeBookTrimInches.Height * dpi);
+				float spineThickness = Program.PageThicknessInches * Settings.Default.BookPageCount * dpi;
+
+				RhombusTiler rhomTiler = new RhombusTiler(penroseIterations);
+
+				Size sizeCover = new Size(
+					(int)(((sizeBookTrim.Width + marginBleed) * 2) + spineThickness),
+					(int)(sizeBookTrim.Height + (marginBleed * 2)));
+
+				// Get the background image
+				using (Bitmap bitmap = rhomTiler.GetBitmap(sizeCover, dpi))
 				{
-					// Add the elements to the image
-					Program.AddTextAndImages(graphics, bitmap.Size, dpi, bookTrim, bleedSize, bookPageCount, title, author, subtitle);
+					using (Graphics graphics = Graphics.FromImage(bitmap))
+					{
+						// Add the elements to the image
+						Program.AddTextAndImages(
+							graphics,
+							bitmap.Size,
+							dpi,
+							sizeBookTrim,
+							spineThickness,
+							marginBleed);
+					}
+
+					// Add bitmap to the pdf
+					CreateSpacePdf(bitmap);
 				}
 
-				// Add everything to the pdf
-				CreatePdf(bitmap, fileName, title, author, subtitle);
+				int kindleHeight = Settings.Default.KindleHeight;
+				float kindleAspectRatio = Settings.Default.KindleAspectRatio;
+				Size sizeCoverKindle = new Size((int)(kindleHeight / kindleAspectRatio), kindleHeight);
+				int dpiKindle = (int)(kindleHeight / sizeBookTrimInches.Height);
 
-				// View the pdf
-				Process.Start(fileName);
+				// Get the background image
+				using (Bitmap bitmap = rhomTiler.GetBitmap(sizeCoverKindle, dpiKindle))
+				{
+					using (Graphics graphics = Graphics.FromImage(bitmap))
+					{
+						// Add the elements to the image
+						// Safe area of cover front rectangle
+						float marginSafe = Settings.Default.MarginSafeInches * dpiKindle;
+						RectangleF rectSafeFront = new RectangleF(
+							marginSafe,
+							marginSafe,
+							bitmap.Width - (marginSafe * 2),
+							bitmap.Height - (marginSafe * 2));
+
+						Program.AddFrontCoverText(graphics, dpiKindle, rectSafeFront);
+					}
+
+					dpiKindle = Settings.Default.KindleDpi;
+					bitmap.SetResolution(dpiKindle, dpiKindle);
+					KindleTif(bitmap);
+				}
+			}
+			catch (Exception ex)
+			{
+				// Generic exception handling at the top of the call stack
+				Console.WriteLine(Resources.ErrorMessage, ex.Message);
 			}
 		}
 	}
