@@ -112,7 +112,7 @@ This book contrains hundreds of rules and examples showing how to write good qua
       <Value Profile="(Default)">0.85</Value>
     </Setting>
     <Setting Name="SpacingSubtitleInches" Type="System.Single" Scope="Application">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1.2</Value>
     </Setting>
     <Setting Name="SpacingDraftInches" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">1.75</Value>

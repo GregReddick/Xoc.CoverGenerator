@@ -326,7 +326,7 @@ This book contrains hundreds of rules and examples showing how to write good qua
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.2")]
         public float SpacingSubtitleInches {
             get {
                 return ((float)(this["SpacingSubtitleInches"]));
